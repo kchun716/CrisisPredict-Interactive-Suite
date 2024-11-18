@@ -84,5 +84,34 @@ model = Prophet(yearly_seasonality=True)
 model.fit(loc_data)
 future = model.make_future_dataframe(periods=60)
 forecast = model.predict(future)
+```
+## Risk Classification
+Classified forecasted values into risk categories (low, medium, high) based on quantile thresholds.
 
-   
+```python
+def classify_risk(row, lower_quantile, upper_quantile):
+    if row['yhat'] < lower_quantile:
+        return 'Low Risk'
+    elif row['yhat'] < upper_quantile:
+        return 'Medium Risk'
+    else:
+        return 'High Risk'
+```
+
+## Clustering and Heatmap
+KMeans Clustering
+Grouped regions based on forecasted trends using KMeans, which assigned a risk level to each region (low, medium, high).
+```python
+kmeans = KMeans(n_clusters=3, random_state=2024)
+trend_summary['risk_cluster'] = kmeans.fit_predict(clustering_features)
+```
+## Heatmap Visualization
+Used folium.plugins.HeatMap to create a heatmap showing conflict intensity and risk levels across different regions.
+```python
+HeatMap(heatmap_points, radius=10, blur=15, max_zoom=1).add_to(m)
+```
+
+## Future Enhancements
+Real-Time Alerts: Integrate real-time notifications to alert users of new conflict developments as they happen.
+Enhanced Filtering: Allow users to filter data by specific event types, regions, or timeframes for more tailored insights.
+Additional Data Layers: Incorporate related datasets such as infrastructure, weather, and socio-political information for a more comprehensive view of potential challenges.
