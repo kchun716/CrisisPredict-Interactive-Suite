@@ -60,4 +60,3 @@ Organizations like DWB need tools to effectively monitor and anticipate conflict
 - **Real-Time Alerts**: Integrate notifications for emerging conflicts.
 - **Enhanced Filters**: Add user-defined filters for event type or region.
 - **Additional Data Layers**: Include infrastructure and weather data for comprehensive situational awareness.
-
